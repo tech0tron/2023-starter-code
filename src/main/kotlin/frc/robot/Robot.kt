@@ -7,9 +7,13 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import com.revrobotics.CANSparkMax
+import com.revrobotics.CANSparkMaxLowLevel
 import com.revrobotics.CANSparkMaxLowLevel.MotorType
 import com.revrobotics.REVPhysicsSim
 import edu.wpi.first.math.system.plant.*
+import edu.wpi.first.wpilibj.XboxController
+import edu.wpi.first.wpilibj.drive.DifferentialDrive
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,6 +22,16 @@ import edu.wpi.first.math.system.plant.*
  * project.
  */
 class Robot : TimedRobot() {
+  val controller = XboxController(0)
+  val motorFrontLeft = CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless)
+  val motorFrontRight = CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless)
+  val motorBackLeft = CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless)
+  val motorBackRight = CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless)
+
+  val motorsLeft = MotorControllerGroup(motorFrontLeft, motorBackLeft)
+  val motorsRight =  MotorControllerGroup(motorFrontRight, motorBackRight)
+
+
   private var m_autonomousCommand: Command? = null
   private var m_robotContainer: RobotContainer? = null
 
@@ -71,6 +85,12 @@ class Robot : TimedRobot() {
   }
 
   override fun teleopInit() {
+    val forward = controller.rightTriggerAxis
+            val rotation =  controller.rightX
+    motorFrontLeft.setVoltage(forward)
+    motorFrontLeft.setVoltage(forward)
+    motorFrontLeft.setVoltage(forward)
+    motorFrontLeft.setVoltage(forward)
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -80,7 +100,18 @@ class Robot : TimedRobot() {
 
   /** This function is called periodically during operator control.  */
   override fun teleopPeriodic() {
+    val scalar = 3.0
+    val forward = controller.rightTriggerAxis
+    val backward = controller.leftTriggerAxis
+    val rotation = controller.rightX
+    motorsLeft.setVoltage((forward - backward - rotation)* scalar)
+    motorsRight.setVoltage((forward - backward + rotation)* scalar)
   }
+
+
+
+
+
 
   override fun testInit() {
     // Cancels all running commands at the start of test mode.
