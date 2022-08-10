@@ -5,6 +5,8 @@ package frc.robot
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
+import frc.robot.commands.Drive
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the [Robot]
@@ -12,7 +14,11 @@ import edu.wpi.first.wpilibj2.command.Command
  * subsystems, commands, and button mappings) should be declared here.
  */
 class RobotContainer {
-  // Hardware and subsystem initialization
+  /**
+   * Like the subsystem and commands, up here we can put any variables we think we should initialize.
+   * In practice, this is where we initialize motors, controllers, any other hardware, and subsystems on the robot.
+   */
+
   init {
     configureButtonBindings()
     configureAutoOptions()
@@ -24,11 +30,13 @@ class RobotContainer {
    * Controller ([GenericHID], [XboxController]) mapping.
    */
   private fun configureButtonBindings() {
-
+    // Uncomment this line and add whatever args you made Drive take in!
+    // Also make sure your drivetrain subsystem is initialized under the name drivetrain.
+    // drivetrain.defaultCommand = Drive( ... )
   }
 
   private fun configureAutoOptions() {
-    // Drive forwards for 1.5s to clear tarmac [2pt]
+
   }
 
   val autonomousCommand: Command
