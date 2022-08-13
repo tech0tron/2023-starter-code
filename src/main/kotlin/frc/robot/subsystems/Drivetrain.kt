@@ -1,5 +1,8 @@
 package frc.robot.subsystems
 
+import com.revrobotics.CANSparkMax
+import com.revrobotics.CANSparkMaxLowLevel
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 
 /** Before we can program the driving of the robot, we need to program the subsystem, which will be the
@@ -10,6 +13,14 @@ class Drivetrain(
          * What do you think we should pass into the drivetrain subystem?
          * Motors? Controllers? Constants? Anything else? **/
 ) : SubsystemBase() {
+    val motorLF = CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless)
+    val motorRF = CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless)
+    val motorLB = CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless)
+    val motorRB = CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless)
+
+    val motorsRight = MotorControllerGroup(motorRF, motorRB)
+    val motorsLeft = MotorControllerGroup(motorLF, motorLB)
+
 
     /**
      * Here you can specify any variables you think would be helpful for the class.
@@ -20,6 +31,8 @@ class Drivetrain(
         /** The code you write in here will be run as soon as a Drivetrain instance is created.
          * What do you think should go here?
          */
+        motorsRight.inverted = true
+
     }
 
     override fun periodic() {
@@ -34,4 +47,8 @@ class Drivetrain(
      * wheelSpeeds() (Get the wheel speeds of the motors using encoders), heading() (We had the gyro in the drivetrain
      * subsystem and this function got the angle of it), and more.
      */
+    fun tankDriveVolts(leftVolts : Double, rightVolts : Double){
+        motorsLeft.setVoltage(leftVolts)
+        motorsRight.setVoltage(rightVolts)
+    }
 }

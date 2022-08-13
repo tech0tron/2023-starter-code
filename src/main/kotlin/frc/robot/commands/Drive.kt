@@ -6,7 +6,7 @@ import frc.robot.subsystems.Drivetrain
 /** Now that you've written the Drivetrain subsystem (or maybe you're doing this first idk), it's time to write
  * the command to drive the robot.
  */
-class Drive(val drivetrain: Drivetrain,
+class Drive(val drivetrain: Drivetrain, val speeds: () -> Pair<Double, Double>
     /** Like the DrivetrainSubsystem we can pass in args here too. What do you think the Drive command
      * should have? Motors? Controllers? Constants? Anything else?
      */
@@ -25,6 +25,8 @@ class Drive(val drivetrain: Drivetrain,
 
     override fun execute() {
         super.execute()
+        var speedsToSet = speeds()
+        drivetrain.tankDriveVolts(speedsToSet.first, speedsToSet.second)
         /** Here you can put code that will be run periodicaly (20 times/second)
          * Here is a good place to put the code that will read in whatever inputs you're using
          * and apply the new voltage or speed to the motors.

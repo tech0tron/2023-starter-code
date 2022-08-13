@@ -22,14 +22,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup
  * project.
  */
 class Robot : TimedRobot() {
-  val controller = XboxController(0)
-  val motorFrontLeft = CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless)
-  val motorFrontRight = CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless)
-  val motorBackLeft = CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless)
-  val motorBackRight = CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless)
-
-  val motorsLeft = MotorControllerGroup(motorFrontLeft, motorBackLeft)
-  val motorsRight =  MotorControllerGroup(motorFrontRight, motorBackRight)
 
 
   private var m_autonomousCommand: Command? = null
@@ -85,27 +77,12 @@ class Robot : TimedRobot() {
   }
 
   override fun teleopInit() {
-    val forward = controller.rightTriggerAxis
-            val rotation =  controller.rightX
-    motorFrontLeft.setVoltage(forward)
-    motorFrontLeft.setVoltage(forward)
-    motorFrontLeft.setVoltage(forward)
-    motorFrontLeft.setVoltage(forward)
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
     // this line or comment it out.
     m_autonomousCommand?.cancel()
   }
 
   /** This function is called periodically during operator control.  */
   override fun teleopPeriodic() {
-    val scalar = 3.0
-    val forward = controller.rightTriggerAxis
-    val backward = controller.leftTriggerAxis
-    val rotation = controller.rightX
-    motorsLeft.setVoltage((forward - backward - rotation)* scalar)
-    motorsRight.setVoltage((forward - backward + rotation)* scalar)
   }
 
 
