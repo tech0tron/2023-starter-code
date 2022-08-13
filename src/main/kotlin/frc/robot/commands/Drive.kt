@@ -36,7 +36,7 @@ class Drive(val drivetrain: Drivetrain, val speeds: () -> Pair<Double, Double>
          **/
         addRequirements(drivetrain)
         entry.setString(text)
-        /** Feel free to put any init code you think would be useful **/
+        /** Feel ]free to put any init code you think would be useful **/
     }
 
     override fun execute() {
